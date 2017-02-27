@@ -1,0 +1,13 @@
+RewriteEngine ON
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^login$ index.php?controller=pages&action=login [L]
+RewriteRule ^register$ index.php?controller=pages&action=register [L]
+RewriteRule ^logout$ index.php?controller=users&action=logout [L]
+RewriteRule ^user-login$ index.php?controller=users&action=login [L]
+RewriteRule ^user-register$ index.php?controller=users&action=register [L]
+
+RewriteRule ^search$ index.php?controller=pages&action=jobs [L]
+RewriteRule ^details/([a-zA-Z0-9_0]+)$ index.php?controller=jobs&action=show&id=$1 [L]
