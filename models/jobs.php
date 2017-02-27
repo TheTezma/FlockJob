@@ -50,11 +50,16 @@ class Job {
 
 	public static function avg_salary() {
 		$db = Db::getInstance();
-		$req = $db->query("SELECT SUM(salary) AS TotalSalary FROM jobs;")->fetchAll();
+		$req = $db->query("SELECT SUM(salary) AS TotalSalary FROM jobs;")->fetch();
 
-		$req2 = $db->query("SELECT count(*) FROM jobs")->fetchColumn();
+		$req2 = $db->query("SELECT count(*) AS TotalJobs FROM jobs")->fetchColumn();
 
-		// TODO TODO TODO
+		$Avg = $req['TotalSalary'] / $req2;
+
+		$Formatted_Avg = number_format($Avg);
+
+		echo "$" . $Formatted_Avg;
+
 	}
 
 	public static function similar($title) {

@@ -86,7 +86,10 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 		<div class="col-sm-3">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<?= $Mustache->render('{{avgsalary}}', array("avgsalary" => Job::avg_salary())); ?>
+					<?php
+					// echo $Mustache->render('{{avgsalary}}', array("avgsalary" => Job::avg_salary())); 
+					?>
+					<span ng-controller="AverageSalary">{{ AverageSalary }}</span>
 				</div>
 			</div>
 		</div>
