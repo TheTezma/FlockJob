@@ -13,7 +13,12 @@ if(isset($_GET['action'])) {
 			break;
 
 		case 'job':
-			Route::Get($action, "Job", "All");
+			if(isset($_GET['searchterm'])) {
+				$searchterm = $_GET['searchterm'];
+				Route::Get($action, "Job", $searchterm);
+			} else {
+				Route::Get($action, "Job", "All");
+			}
 	}
 
 } else {

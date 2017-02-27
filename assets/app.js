@@ -11,7 +11,7 @@ onKeyPressTextMessage = function(){
 var app = angular.module('FlockJob', []);
 
 app.controller('Main', function($scope, $http) {
-    $http.get("/Other-Sites/UserAppBackend/?action=job")
+    $http.get("/api/?action=job")
     .then(function(response) {
         $scope.Response = response.data;
     });
