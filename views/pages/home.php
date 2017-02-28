@@ -89,7 +89,7 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 					<?php
 					// echo $Mustache->render('{{avgsalary}}', array("avgsalary" => Job::avg_salary())); 
 					?>
-					<span ng-controller="AverageSalary">{{ AverageSalary }}</span>
+					<span ng-controller="AverageSalary" ng-cloak>{{ AverageSalary }}</span>
 				</div>
 			</div>
 		</div>
