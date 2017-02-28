@@ -273,3 +273,15 @@ body {
 	opacity: 0.9;
 	cursor: pointer;
 }
+
+.averagesalary {
+	font-size: 24px;
+}
+
+.avgsal-sub {
+	color: #666;
+}
+
+.thing-panel {
+	border-top:1px solid #c0c0c0;
+}

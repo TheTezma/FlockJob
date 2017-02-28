@@ -33,7 +33,7 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 		</div>
 	</div>
 	<div class="result-info-row">
-		<span><?= $Mustache->render('{{jobs}} Jobs In Australia', array("jobs" => Job::count())); ?></span>
+		<span ng-cloak>{{ JobCount }} Jobs in Australia</span>
 	</div>
 	<div class="row">
 		<div class="col-sm-3">
@@ -45,22 +45,25 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 		</div>
 		<div class="col-sm-6">
 			<div class="srt">
-				<?= $Mustache->render('{{rows}} Results', array("rows" => Job::count())); ?>
+				<span ng-cloak>{{ JobCount }} results</span>
+				<?php
+				// echo $Mustache->render('{{rows}} Results', array("rows" => Job::count())); 
+				?>
 			</div>	
 			<div class="center-panel">
-				<div class="job-panel" ng-repeat="x in Response">
+				<div class="job-panel" ng-repeat="x in Jobs" ng-cloak>
 					<div class="job-panel-header">
-						<a href="/details/{{ x.id }}">{{ x.title }}</a>
+						<a href="/details/{{ x.id }}" ng-cloak>{{ x.title }}</a>
 					</div>
 					<div class="job-panel-subheader">
-						<span class="company">{{ x.company }}</span> - 
-						<span class="location">{{ x.location }}</span>
+						<span class="company" ng-cloak>{{ x.company }}</span> - 
+						<span class="location" ng-cloak>{{ x.location }}</span>
 					</div>
 					<div class="job-panel-shortdesc">
-						{{ x.description }}
+						<span ng-cloak>{{ x.description }}</span>
 					</div>
 					<div class="job-panel-footer">
-						<a href="/details/{{ x.id }}">More Details »</a>
+						<a href="/details/{{ x.id }}" ng-cloak>More Details »</a>
 					</div>
 				</div>
 				<?php
@@ -89,7 +92,15 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 					<?php
 					// echo $Mustache->render('{{avgsalary}}', array("avgsalary" => Job::avg_salary())); 
 					?>
-					<span ng-controller="AverageSalary" ng-cloak>{{ AverageSalary }}</span>
+					<div class="col-sm-6">
+						<span ng-cloak>
+							<strong class="averagesalary">{{ AverageSalary }}</strong><br>
+							<span class="avgsal-sub">Average salary for jobs in Australia</span>
+						</span>
+					</div>
+					<div class="col-sm-6">
+						<img width="100" src="assets/images/dollar-bill.png">
+					</div>
 				</div>
 			</div>
 		</div>

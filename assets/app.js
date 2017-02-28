@@ -13,13 +13,16 @@ var app = angular.module('FlockJob', []);
 app.controller('Main', function($scope, $http) {
     $http.get("/i/jobs")
     .then(function(response) {
-        $scope.Response = response.data;
+        $scope.Jobs = response.data.jobs;
+        $scope.AverageSalary = response.data.avgSalary;
+        $scope.JobCount = response.data.count;
     });
 });
 
-app.controller('AverageSalary', function($scope, $http) {
-    $http.get("/i/avgSalary")
-    .then(function(response) {
-        $scope.AverageSalary = response.data;
-    });
-});
+// app.controller('AverageSalary', function($scope, $http) {
+//     $http.get("/i/jobs")
+//     .then(function(response) {
+//         $scope.Response = response.data;
+//     });
+// });
+
