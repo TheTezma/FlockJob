@@ -74,6 +74,10 @@ class Job {
 		echo json_encode($Similars);
 	}
 
+	public static function search() {
+		
+	}
+
 }
 
 ?>

@@ -1,7 +1,7 @@
 <DOCTYPE html>
 <html>
   <head>
-    <title>FlockJob</title>
+    <title ng-cloak>{{ AppTitle }}</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="/assets/app.js"></script>

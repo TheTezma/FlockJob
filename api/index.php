@@ -1,23 +1,23 @@
 <?php
 require_once 'config/connection.php';
-require_once 'Models/Route.php';
+require_once 'models/Route.php';
 
 if(isset($_GET['action'])) {
 
 	$action = $_GET['action'];
 
 	switch($_GET['action']) {
-		case 'user':
-			$id = $_GET['id'];
-			Route::Get($action, "User", "Data");
+		case 'jobsearch':
+			Route::Search($_GET['job'], $_GET['location'], $_GET['minsal']);
 			break;
 
-		case 'job':
-			Route::Get($action, "Job", "All");
+		case 'alljobs':
+			Route::All();
 			break;
 
-		case 'salary':
-			Route::Get($action, "Salary", "Average");
+		default:
+			echo "Test";
+			break;
 	}
 
 } else {

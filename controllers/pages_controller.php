@@ -30,6 +30,12 @@
 
     }
 
+    public function search() {
+      $userdata = User::isLoggedin();
+      $Jobs = Job::search();
+      require_once 'views/pages/search.php';
+    }
+
     public function jobdetails() {
       $Jobs = Job::show();
       $userdata = User::isLoggedin();
