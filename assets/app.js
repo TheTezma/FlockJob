@@ -36,6 +36,12 @@ var app = angular.module('FlockJob', []);
 
 app.controller('Main', function($scope, $http) {
 
+  $scope.AppTitle = "FlockJob";
+
+});
+
+app.controller('Search', function($scope, $http) {
+
     var currentParams = getUrlParams(window.location.href);
 
 	  $scope.sliders = [];
@@ -46,13 +52,18 @@ app.controller('Main', function($scope, $http) {
     $scope.salary = currentParams['minsal'];
     $scope.salaryClean = "$" + nf.format(currentParams['minsal']);
 
-    $http.get("/api/index.php?action=jobsearch&job=" + currentParams['job'] + "&location=1&minsal=" + currentParams['minsal'])
+    $http.get("/api/index.php?action=jobsearch&job=" + currentParams['job'] + "&location=" + currentParams['location'] + "&minsal=" + currentParams['minsal'])
     .then(function(response) {
         $scope.Jobs = response.data.jobs;
         $scope.TopInfo = response.data.topinfo + nf.format(currentParams['minsal']);
         $scope.AppTitle = $scope.TopInfo;
         $scope.AverageSalary = response.data.avgSalary;
         $scope.JobCount = response.data.count;
+    });
+
+    $http.get("/api/index.php?action=locations")
+    .then(function(response) {
+        $scope.Locations = response.data;
     });
 });
 

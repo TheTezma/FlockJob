@@ -12,6 +12,11 @@ class Route {
 		Job::Search($job, $location, $minsal);
 	}
 
+	public static function Locations() {
+		require_once 'controllers/location_controller.php';
+		Location::All();
+	}
+
 }
 
 ?>

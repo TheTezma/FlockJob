@@ -3,7 +3,7 @@ $Mustache = new Mustache_Engine;
 $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 // echo $Mustache->render('Hello, {{planet}}!', array('planet' => 'World'));
 ?>
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="Search">
 	<div class="top-nav">
 		<div class="nav-row">
 			<ul class="top-nav-ul">
@@ -38,13 +38,31 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-heading">
 					<strong style="font-size: 18px;">Salary</strong>
-
-					<span ng-repeat="slider in sliders track by $index"><br>
-						<span ng-cloak class="slider-salary">{{slider.value | currency:"$":0}}</span>
+				</div>
+				<div class="panel-body" style="text-align: center;">
+					<span ng-repeat="slider in sliders track by $index">
+						<span style="font-size: 18px;" ng-cloak class="slider-salary">{{slider.value | currency:"$":0}}</span>
 				    	<input ng-init="slider.value = salary" type="range" ng-model="slider.value" min="0" max="200000" step="5000" onchange="SalarySearch(this.value)">
 				    </span>
+				    <div style="color: #999; font-size: 12px;">
+					    <span style="float: left;">$0</span>
+					    <span style="padding-left: 25px">$100k</span>
+					    <span style="float: right;">$200k+</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong style="font-size: 18px;">Location</strong>
+				</div>
+				<div class="panel-body">
+					<select style="width: 100%; font-size: 16px; background-color: white;">
+						<option value="">Anywhere</option>
+						<option ng-repeat="x in Locations" value="{{ x.id }}">{{ x.name }}</option>
+					</select>		
 				</div>
 			</div>
 		</div>
@@ -103,6 +121,13 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 					<div class="col-sm-6">
 						<img width="100" src="assets/images/dollar-bill.png">
 					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-body" style="text-align: center;">
+					<strong>Want to post a job listing?</strong><br><br>
+					<a style="width: 100%;" class="btn btn-danger" href="/advertise">Advertise Here!</a>
 				</div>
 			</div>
 		</div>

@@ -11,8 +11,8 @@ if(isset($_GET['action'])) {
 			Route::Search($_GET['job'], $_GET['location'], $_GET['minsal']);
 			break;
 
-		case 'alljobs':
-			Route::All();
+		case 'locations':
+			Route::Locations();
 			break;
 
 		default:

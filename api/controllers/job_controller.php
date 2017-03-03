@@ -33,15 +33,30 @@ class Job {
 
 		if(empty($job)) {
 
-			$query = "SELECT * FROM jobs WHERE location_id = :location AND salary >= :minsal LIMIT 15";
+			if(empty($location)) {
+				$query = "SELECT * FROM jobs WHERE salary >= :minsal LIMIT 15";
+				$execArr = array(":minsal" => $minsal);
+
+				$query2 = "SELECT count(*) AS Total FROM jobs WHERE salary >= '$minsal'";
+
+				$query3 = "SELECT SUM(salary) AS TotalSalary FROM jobs WHERE salary >= '$minsal'";
+			} else {
+				$query = "SELECT * FROM jobs WHERE location_id = :location AND salary >= :minsal LIMIT 15";
+				$execArr = array(":location" => $location, ":minsal" => $minsal);
+
+				$query2 = "SELECT count(*) AS Total FROM jobs WHERE location_id = '$location' AND salary >= '$minsal'";
+
+				$query3 = "SELECT SUM(salary) AS TotalSalary FROM jobs WHERE location_id = '$location' AND salary >= '$minsal'";
+			}
+
 			$req = $db->prepare($query);
-			$req->execute(array(":location" => $location, ":minsal" => $minsal));
+			$req->execute($execArr);
 
 			$res = $req->fetchAll(PDO::FETCH_ASSOC);
 
-			$req2 = $db->query("SELECT count(*) AS Total FROM jobs WHERE location_id = '$location' AND salary >= '$minsal'")->fetchColumn();
+			$req2 = $db->query($query2)->fetchColumn();
 
-			$req3 = $db->query("SELECT SUM(salary) AS TotalSalary FROM jobs WHERE location_id = '$location' AND salary >= '$minsal'")->fetch();
+			$req3 = $db->query($query3)->fetch();
 
 			$Avg = $req3['TotalSalary'] / $req2;
 
@@ -65,15 +80,30 @@ class Job {
 
 		} else {
 
-			$query = "SELECT * FROM jobs WHERE title LIKE :title AND location_id = :location AND salary >= :minsal LIMIT 15";
+			if(empty($location)) {
+				$query = "SELECT * FROM jobs WHERE title LIKE :title AND salary >= :minsal LIMIT 15";
+				$execArr = array(":title" => "%".$job."%", ":minsal" => $minsal);
+
+				$query2 = "SELECT count(*) AS Total FROM jobs WHERE title LIKE '%".$job."%' AND salary >= '$minsal'";
+
+				$query3 = "SELECT SUM(salary) AS TotalSalary FROM jobs WHERE title LIKE '%".$job."%' AND salary >= '$minsal'";
+			} else {
+				$query = "SELECT * FROM jobs WHERE title LIKE :title AND location_id = :location AND salary >= :minsal LIMIT 15";
+				$execArr = array(":title" => "%".$job."%", ":location" => $location, ":minsal" => $minsal);
+
+				$query2 = "SELECT count(*) AS Total FROM jobs WHERE title LIKE '%".$job."%' AND location_id = '$location' AND salary >= '$minsal'";
+
+				$query3 = "SELECT SUM(salary) AS TotalSalary FROM jobs WHERE '%".$job."%' AND location_id = '$location' AND salary >= '$minsal'";
+			}
+
 			$req = $db->prepare($query);
-			$req->execute(array(":title" => "%".$job."%", ":location" => $location, ":minsal" => $minsal));
+			$req->execute($execArr);
 
 			$res = $req->fetchAll(PDO::FETCH_ASSOC);
 
-			$req2 = $db->query("SELECT count(*) AS Total FROM jobs WHERE title LIKE '%".$job."%' AND location_id = '$location' AND salary >= '$minsal'")->fetchColumn();
+			$req2 = $db->query($query2)->fetchColumn();
 
-			$req3 = $db->query("SELECT SUM(salary) AS TotalSalary FROM jobs WHERE title LIKE '%".$job."%' AND location_id = '$location' AND salary >= '$minsal'")->fetch();
+			$req3 = $db->query($query3)->fetch();
 
 			$Avg = $req3['TotalSalary'] / $req2;
 
