@@ -3,7 +3,6 @@
     public function home() {
       $Jobs = Job::all();
       $userdata = User::isLoggedin();
-      require_once 'views/pages/navigation.php';
       require_once('views/pages/home.php');
     }
 
@@ -40,6 +39,11 @@
       $Jobs = Job::show();
       $userdata = User::isLoggedin();
       require_once 'views/pages/jobdetails.php';
+    }
+
+    public function advertise() {
+      $userdata = User::isLoggedin();
+      require_once 'views/pages/advertise.php';
     }
   }
 ?>

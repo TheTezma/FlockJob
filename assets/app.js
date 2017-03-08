@@ -30,6 +30,12 @@ function SalarySearch(value) {
   window.location.href = "/search?job=" + currentParams['job'] + "&location=" + currentParams['location'] + "&minsal=" + value;
 }
 
+function LocationSearch(value) {
+  var currentParams = getUrlParams(window.location.href);
+
+  window.location.href = "/search?job=" + currentParams['job'] + "&location=" + value + "&minsal=" + currentParams['minsal'];
+}
+
 var nf = new Intl.NumberFormat();
 
 var app = angular.module('FlockJob', []);
@@ -40,7 +46,28 @@ app.controller('Main', function($scope, $http) {
 
 });
 
-app.controller('Search', function($scope, $http) {
+app.controller('Search', function($scope, $http, $sce) {
+
+    $scope.getHtml = function(html){
+        return $sce.trustAsHtml(html);
+    };
+
+    $http.get("/api/index.php?action=userdata")
+    .then(function(response) {
+      $scope.Name = response.data.userdata.name;
+      $scope.Email = response.data.userdata.email;
+      $scope.Id = response.data.userdata.id;
+      $scope.Status = response.data.status;
+
+      if($scope.Status == "false") {
+        $scope.UserSection = "<a href='/login'>Login</a> / <a href='/register'>Register</a>";
+      }
+
+      if($scope.Status == "true") {
+        $scope.UserSection = "<a>" + $scope.Name + "</a>"
+      }
+
+    });
 
     var currentParams = getUrlParams(window.location.href);
 
@@ -61,9 +88,19 @@ app.controller('Search', function($scope, $http) {
         $scope.JobCount = response.data.count;
     });
 
-    $http.get("/api/index.php?action=locations")
+    $http.get("/api/index.php?action=locations&location=" + currentParams['location'])
     .then(function(response) {
-        $scope.Locations = response.data;
+        $scope.Locations = response.data.locations;
+        $scope.Location = response.data.searchLocation;
     });
+
 });
+
+app.controller('Advertise', function($scope, $http) {
+
+
+
+});
+
+
 

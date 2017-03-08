@@ -9,9 +9,12 @@ class User {
 	public static function isLoggedin() {
 		if(empty($_SESSION['user'])) {
 			$loggedin = 'false';
+            $UserArray = array("LoggedIn" => "false");
 		} else {
 			$loggedin = 'true';
 			User::userData();
+            $UserArray = array("LoggedIn" => "true",
+                               "name" => $_SESSION['user']['name']);
 		}
 	}
 

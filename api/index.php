@@ -1,6 +1,10 @@
 <?php
+session_start();
+
 require_once 'config/connection.php';
 require_once 'models/Route.php';
+
+$App = new Route;
 
 if(isset($_GET['action'])) {
 
@@ -8,11 +12,15 @@ if(isset($_GET['action'])) {
 
 	switch($_GET['action']) {
 		case 'jobsearch':
-			Route::Search($_GET['job'], $_GET['location'], $_GET['minsal']);
+			$App->Search($_GET['job'], $_GET['location'], $_GET['minsal']);
 			break;
 
 		case 'locations':
-			Route::Locations();
+			$App->Locations($_GET['location']);
+			break;
+
+		case 'userdata':
+			$App->UserData();
 			break;
 
 		default:
@@ -22,7 +30,7 @@ if(isset($_GET['action'])) {
 
 } else {
 	$action = "error";
-	Route::Get($action);
+	$App->Get($action);
 }
 
 ?>

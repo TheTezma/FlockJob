@@ -6,14 +6,15 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 <div class="container-fluid" ng-controller="Search">
 	<div class="top-nav">
 		<div class="nav-row">
-			<ul class="top-nav-ul">
+			<ul class="top-nav-ul" ng-bind-html="getHtml(UserSection)">
 				<?php
-				if(empty($_SESSION['user'])) {
-					echo $Mustache->render('<a href="/login">Login</a> {{sep}} <a href="/register">Register</a>', array("sep" => "/"));
-				} else {
-					echo $Mustache->render('<a>{{name}}</a>', array("name" => $_SESSION['user']['name']));
-				}
+				// if(empty($_SESSION['user'])) {
+				// 	echo $Mustache->render('<a href="/login">Login</a> {{sep}} <a href="/register">Register</a>', array("sep" => "/"));
+				// } else {
+				// 	echo $Mustache->render('<a>{{name}}</a>', array("name" => $_SESSION['user']['name']));
+				// }
 				?>
+
 			</ul>
 		</div>
 	</div>
@@ -59,7 +60,7 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 					<strong style="font-size: 18px;">Location</strong>
 				</div>
 				<div class="panel-body">
-					<select style="width: 100%; font-size: 16px; background-color: white;">
+					<select style="width: 100%; font-size: 16px; background-color: white;" onchange="LocationSearch(this.value)">
 						<option value="">Anywhere</option>
 						<option ng-repeat="x in Locations" value="{{ x.id }}">{{ x.name }}</option>
 					</select>		

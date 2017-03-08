@@ -2,19 +2,28 @@
 
 class Route {
 
-	public static function All() {
+	public function All() {
 		require_once "controllers/job_controller.php";
-		Job::All();
+		$Job = new Job;
+		$Job->All();
 	}
 
-	public static function Search($job, $location, $minsal) {
+	public function Search($job, $location, $minsal) {
 		require_once 'controllers/job_controller.php';
-		Job::Search($job, $location, $minsal);
+		$Job = new Job;
+		$Job->Search($job, $location, $minsal);
 	}
 
-	public static function Locations() {
+	public function Locations($location) {
 		require_once 'controllers/location_controller.php';
-		Location::All();
+		$Location = new Location;
+		$Location->All($location);
+	}
+
+	public function UserData() {
+		require_once 'controllers/user_controller.php';
+		$User = new User;
+		$User->Data();
 	}
 
 }
