@@ -15,30 +15,22 @@
 //
 require_once 'src/Mustache/Autoloader.php';
 require_once 'connection.php';
+require_once 'core/Utilities.php';
+require_once 'core/Application.php';
 
 //
-//  Initiate Mustache
+//  Initiate Classes
 //
 Mustache_Autoloader::register();
+$App = new Application;
 
 //
 //  Initiate Session
 //
 session_start();
 
-//
-//  Handle Page Request
-//
-if (isset($_GET['controller']) && isset($_GET['action'])) {
-  $controller = $_GET['controller'];
-  $action     = $_GET['action'];
-} else {
-  $controller = 'pages';
-  $action     = 'home';
-}
-
-//
-//  Display Page Layout
-//
-require_once 'views/layout.php';
+// 
+// 	Route Request To Correct Page
+// 
+$App->Route();
 ?>

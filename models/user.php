@@ -88,7 +88,11 @@ class User {
             $User = User::isLoggedin();
              
             // Redirect the user to the private members-only page. 
-            header("Location: ."); 
+            ?>
+            <script type="text/javascript">
+            window.location.href = '/';
+            </script>
+            <?php
             die("Redirecting to: ."); 
         } 
         else 
@@ -237,7 +241,11 @@ class User {
         } 
          
         // This redirects the user back to the login page after they register 
-        header("Location: login"); 
+        ?>
+            <script type="text/javascript">
+            window.location.href = '/login';
+            </script>
+            <?php
          
         // Calling die or exit after performing a redirect using the header function 
         // is critical.  The rest of your PHP script will continue to execute and 
@@ -265,7 +273,11 @@ class User {
 	    session_destroy();
 
 	    // Whether we destroy the session or not, we redirect them to the login page
-	    header("Location: login");
+	    ?>
+            <script type="text/javascript">
+            window.location.href = '/login';
+            </script>
+            <?php
 	    die("Redirecting to: login");
 	}
 

@@ -2,22 +2,16 @@
 $Mustache = new Mustache_Engine;
 $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 // echo $Mustache->render('Hello, {{planet}}!', array('planet' => 'World'));
+
+if($_SERVER['REQUEST_URI'] == "/search") {
+	$App->Redirect('/search?job=&location=&minsal=0');
+}
+
 ?>
 <div class="container-fluid" ng-controller="Search">
-	<div class="top-nav">
-		<div class="nav-row">
-			<ul class="top-nav-ul" ng-bind-html="getHtml(UserSection)">
-				<?php
-				// if(empty($_SESSION['user'])) {
-				// 	echo $Mustache->render('<a href="/login">Login</a> {{sep}} <a href="/register">Register</a>', array("sep" => "/"));
-				// } else {
-				// 	echo $Mustache->render('<a>{{name}}</a>', array("name" => $_SESSION['user']['name']));
-				// }
-				?>
-
-			</ul>
-		</div>
-	</div>
+	<?php
+	require_once 'views/elements/topnav.php';
+	?>
 	<div class="navigation">
 		<div class="nav-row">
 			<ul class="nav-ul">
@@ -63,60 +57,39 @@ $_SESSION['lastsearch'] = $_SERVER['REQUEST_URI'];
 					<select style="width: 100%; font-size: 16px; background-color: white;" onchange="LocationSearch(this.value)">
 						<option value="">Anywhere</option>
 						<option ng-repeat="x in Locations" value="{{ x.id }}">{{ x.name }}</option>
-					</select>		
+					</select>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-6">
 			<div class="srt">
 				<span ng-cloak>{{ JobCount }} results</span>
-			</div>	
+			</div>
 			<div class="center-panel">
 				<div class="job-panel" ng-repeat="x in Jobs" ng-cloak>
 					<div class="job-panel-header">
 						<a href="/details/{{ x.id }}" ng-cloak>{{ x.title }}</a>
 					</div>
 					<div class="job-panel-subheader">
-						<span class="company" ng-cloak>{{ x.company }}</span> - 
+						<span class="company" ng-cloak>{{ x.company }}</span> -
 						<span class="location" ng-cloak>{{ x.location }}</span>
 					</div>
 					<div class="job-panel-shortdesc">
-						<span ng-cloak>{{ x.description }}</span>
+						<span ng-cloak>{{ x.description | limitTo:180}}</span>
 					</div>
 					<div class="job-panel-footer">
 						<a href="/details/{{ x.id }}" ng-cloak>More Details »</a>
 					</div>
 				</div>
-				<?php
-				// foreach($Jobs as $Job):
-				// 	echo $Mustache->render(
-				// 		'<div class="job-panel">
-				// 			<div class="job-panel-header"><a href="/details/{{id}}">{{title}}</a></div>
-				// 			<div class="job-panel-subheader"><span class="company">{{company}}</span> - <span class="location">{{location}}</span></div>
-				// 			<div class="job-panel-shortdesc">{{short-desc}}</div>
-				// 			<div class="job-panel-footer"><a href="/details/{{id}}">More Details »</a></div>
-				// 		</div>
-				// 		', array(
-				// 				"title" => $Job->title,
-				// 				"company" => $Job->company,
-				// 				"location" => $Job->location,
-				// 				"short-desc" => substr($Job->description, 0, 140),
-				// 				"id" => $Job->id
-				// 				 ));
-				// endforeach;
-				?>
 			</div>
 		</div>
 		<div class="col-sm-3">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<?php
-					// echo $Mustache->render('{{avgsalary}}', array("avgsalary" => Job::avg_salary())); 
-					?>
 					<div class="col-sm-6">
 						<span ng-cloak>
 							<strong class="averagesalary">{{ AverageSalary }}</strong><br>
-							<span class="avgsal-sub">Average salary for jobs in Australia</span>
+							<span class="avgsal-sub">Average salary for {{ SearchTerm }} jobs in Australia</span>
 						</span>
 					</div>
 					<div class="col-sm-6">

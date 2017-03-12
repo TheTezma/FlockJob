@@ -2,6 +2,12 @@ $(document).ready(function() {
 
 });
 
+$(window).on('load', function() { // makes sure the whole site is loaded 
+  $('#status').delay(1000).fadeOut(); // will first fade out the loading animation 
+  $('#preloader').delay(1000).fadeOut('slow'); // will fade out the white DIV that covers the website. 
+  $('body').delay(1000).css({'overflow':'visible'});
+})
+
 onKeyPressTextMessage = function(){
       var textArea = event.currentTarget;
       textArea.style.height = 'auto';
@@ -52,23 +58,6 @@ app.controller('Search', function($scope, $http, $sce) {
         return $sce.trustAsHtml(html);
     };
 
-    $http.get("/api/index.php?action=userdata")
-    .then(function(response) {
-      $scope.Name = response.data.userdata.name;
-      $scope.Email = response.data.userdata.email;
-      $scope.Id = response.data.userdata.id;
-      $scope.Status = response.data.status;
-
-      if($scope.Status == "false") {
-        $scope.UserSection = "<a href='/login'>Login</a> / <a href='/register'>Register</a>";
-      }
-
-      if($scope.Status == "true") {
-        $scope.UserSection = "<a>" + $scope.Name + "</a>"
-      }
-
-    });
-
     var currentParams = getUrlParams(window.location.href);
 
 	  $scope.sliders = [];
@@ -78,6 +67,7 @@ app.controller('Search', function($scope, $http, $sce) {
 
     $scope.salary = currentParams['minsal'];
     $scope.salaryClean = "$" + nf.format(currentParams['minsal']);
+    $scope.SearchTerm = currentParams['job'];
 
     $http.get("/api/index.php?action=jobsearch&job=" + currentParams['job'] + "&location=" + currentParams['location'] + "&minsal=" + currentParams['minsal'])
     .then(function(response) {
@@ -96,11 +86,26 @@ app.controller('Search', function($scope, $http, $sce) {
 
 });
 
+app.controller('Profile', function($scope, $http, $sce) {
+
+    
+
+});
+
 app.controller('Advertise', function($scope, $http) {
 
 
 
 });
 
+ app.filter('strLimit', ['$filter', function($filter) {
+   return function(input, beginlimit, endlimit) {
+      if (! input) return;
+      if (input.length <= beginlimit + endlimit) {
+          return input;
+      }
 
+      return $filter('limitTo')(input, beginlimit) + '...' + $filter('limitTo')(input, -endlimit) ;
+   };
+}]);
 

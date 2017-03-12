@@ -3,6 +3,8 @@ RewriteEngine ON
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
+RewriteRule ^assets/favicon$ favicon.ico [L]
+
 RewriteRule ^login$ index.php?controller=pages&action=login [L]
 RewriteRule ^register$ index.php?controller=pages&action=register [L]
 RewriteRule ^logout$ index.php?controller=users&action=logout [L]
@@ -12,6 +14,7 @@ RewriteRule ^user-register$ index.php?controller=users&action=register [L]
 RewriteRule ^search$ index.php?controller=pages&action=search [L]
 RewriteRule ^details/([a-zA-Z0-9_0]+)$ index.php?controller=jobs&action=show&id=$1 [L]
 RewriteRule ^advertise$ index.php?controller=pages&action=advertise [L]
+RewriteRule ^profile$ index.php?controller=pages&action=profile [L]
 
 RewriteRule ^i/jobsearch$ api/index.php?action=jobsearch [L]
 RewriteRule ^i/alljobs$ api/index.php?action=alljobs [L]

@@ -32,6 +32,8 @@
     public function search() {
       $userdata = User::isLoggedin();
       $Jobs = Job::search();
+      $Util = new Utilities;
+      $App = new Application;
       require_once 'views/pages/search.php';
     }
 
@@ -44,6 +46,11 @@
     public function advertise() {
       $userdata = User::isLoggedin();
       require_once 'views/pages/advertise.php';
+    }
+
+    public function profile() {
+      $userdata = User::isLoggedin();
+      require_once 'views/pages/profile.php';
     }
   }
 ?>

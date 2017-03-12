@@ -32,10 +32,11 @@
   }
 
   // we're adding an entry for the new controller and its actions
-  $controllers = array('pages' => ['home', 'error', 'login', 'register', 'jobs', 'search', 'advertise'],
-                       'jobs'  => ['show'],
-                       'posts' => ['show', 'newpost', 'vote', 'check'],
-                       'users' => ['login', 'register', 'logout']);
+  $controllers = array(
+      'pages' => ['home', 'error', 'login', 'register', 'jobs', 'search', 'advertise', 'profile'],
+      'jobs'  => ['show'],
+      'posts' => ['show', 'newpost', 'vote', 'check'],
+      'users' => ['login', 'register', 'logout']);
 
   if (array_key_exists($controller, $controllers)) {
     if (in_array($action, $controllers[$controller])) {
